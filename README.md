@@ -52,7 +52,7 @@ Michael @ High Plains Design Studio using the email admin@highplainsdesignstudio
 ## Versioning
 
 We use [SemVer](http://semver.org/) for versioning. For the versions available, see 
-[data-mining, twitter, data-visualization, javascript, nodejs](https://github.com/highplainsdesignstudio/twitterMiner). 
+[v1.0.0](https://github.com/highplainsdesignstudio/twitterMiner). 
 
 ## Authors
 
