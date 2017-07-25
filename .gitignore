@@ -1,2 +1,5 @@
 /bin/output/object.json
 /bin/env_variables.js
+/bin/data/
+/bin/output/
+/nbproject/
