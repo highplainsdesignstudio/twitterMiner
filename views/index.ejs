@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <script src='/bower_components/jquery/dist/jquery.min.js'></script>
+    
+    
+    <script src="bower_components/jqcloud2/dist/jqcloud.min.js"></script>
+
+    <link rel="stylesheet" href="bower_components/jqcloud2/dist/jqcloud.min.css">
+    
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
+  </head>
+  <body class='container'>
+    <h1><%= title %></h1>
+    <p>Welcome to <%= title %></p>
+    <div class='form-group row'>
+       
+        <input id='search-name' type='text' class='form-control col-sm 3' placeholder="File Name">
+        <input id='search-term' type="text" class='form-control col-sm-7' placeholder="Enter Search">
+        <button class='btn btn-primary col-sm-2' onclick='getTweets()'>Search</button>
+    </div>
+    
+    <p id='search-warning' style="display: none;">Please enter a file name & search term.</p>
+        <p id="search-results"></p>
+        <br><br><hr><br><br>
+        
+        <div class='row'>
+        
+            <div class='col-sm-12'>
+                <h2 class='text-center'>Hash Tags Cloud</h2>
+                <div id="hashes-cloud"></div>
+            </div>
+            
+        </div>
+    <script>
+        function getTweets() {
+            var term = $("#search-term").val();
+            var file = $("#search-name").val();
+            if ((/\S/.test(term)) && (/\S/.test(file))) { 
+
+                
+                $('#search-name').val('');
+                $('#search-term').val('');
+                $('#hashes-cloud').jQCloud('destroy');
+                
+                
+                // send the term to be searched for to the server.
+                $.get('/getTweets', {term: term, file: file}, function(data) {
+
+            
+                    $('#search-results').show().text("Found " + data.statuses.length + " statuses.")
+                            .fadeOut(5000);
+                    
+                    
+                    var hashtags = [];
+                    var users = {};
+                    for (var i=0; i < data.statuses.length; i++) {
+                        var tempHashtags = data.statuses[i].entities.hashtags;
+                        hashtags.push(tempHashtags);
+                        
+                        if (users.hasOwnProperty(data.statuses[i].user.screen_name)) {
+                            users[data.statuses[i].user.screen_name]++;
+                        } else {
+                            users[data.statuses[i].user.screen_name] = 1;
+                        }
+                        
+                    }
+                    
+//                    console.log(hashtags);
+                    var tempHashes = {};
+                    for (var j=0; j < hashtags.length; j++) {
+//                        console.log(hashtags[j]);
+                        var temp = hashtags[j];
+                        for (var k=0; k < temp.length; k++) {
+                            if (tempHashes.hasOwnProperty(temp[k].text)) {
+                                tempHashes[temp[k].text]++;
+                            } else {
+                                tempHashes[temp[k].text] = 1;
+                            }
+                        }
+                    }
+                    
+                    var words = [];
+                    for(let word in tempHashes) {
+                        var wordObj = {
+                            text: word,
+                            weight: tempHashes[word]
+                        };
+                        words.push(wordObj);
+                    }
+                    $('#hashes-cloud').jQCloud(words, {
+                        height: 750,
+                        autoResize: true
+                    });
+                    
+                
+                });
+                
+            } else { 
+                console.log("is null"); 
+                $('#search-warning').show().fadeOut(5000);
+            }
+            
+        }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,13 @@
+{
+  "name": "HPDS_TwitterMiner",
+  "version": "1.0.0",
+  "main": "path/to/main.css",
+  "ignore": [
+    ".jshintrc",
+    "**/*.txt"
+  ],
+  "dependencies": {
+    "bootstrap": "v4.0.0-alpha.6"
+  },
+  "devDependencies": {}
+}
