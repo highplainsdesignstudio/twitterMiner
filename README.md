@@ -1,4 +1,4 @@
-# Project Title
+# HPDS Twitter Data Miner
 
 This is a data miner for Twitter information. It requires a Twitter application
 keys, Node.js, the Node Package Manager, and Bower. The app opens on the localhost
