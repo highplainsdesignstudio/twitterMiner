@@ -2,10 +2,11 @@
 
 This is a data miner for Twitter information. It requires a Twitter application
 keys, Node.js, the Node Package Manager, and Bower. The app opens on the localhost
-on port 3000 by default. Currently, it allows you to search through Twitter 
-tweets using a standard Twitter search query, and then stores the returned tweets
-in JSON format in the bin/data folder. There is also a word cloud generated from
-the hashtags that are returned from the query.  
+on port 3000 by default. Currently, it allows you to 
+* Search through Twitter tweets using a standard Twitter search query.
+* Stores the returned tweets in JSON format in the bin/data folder. 
+* Choose from 3 word clouds to display. 
+* Embed the tweets that were returned.
 
 ## Getting Started
 
@@ -28,6 +29,9 @@ been added to the env_variables.js file, you can start this application with
 the command:
 
 npm start
+
+If your default browser does not automatically open, navigate a tab to localhost:3000
+to open the application.
 
 ### Prerequisites
 
@@ -52,7 +56,7 @@ Michael @ High Plains Design Studio using the email admin@highplainsdesignstudio
 ## Versioning
 
 We use [SemVer](http://semver.org/) for versioning. For the versions available, see 
-[v1.0.0](https://github.com/highplainsdesignstudio/twitterMiner). 
+[v1.2.0](https://github.com/highplainsdesignstudio/twitterMiner). 
 
 ## Authors
 
@@ -68,8 +72,4 @@ This project is licensed under the GNU AGPLv3 License - see the [LICENSE.md](LIC
 
 ## Acknowledgments
 
-* Thanks to the open source community that contributed all the technology
-* required to get this project started.
-* 
-
-
+* Thanks to the open source community that contributed all the technology required to get this project started.
