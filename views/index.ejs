@@ -1,5 +1,22 @@
 <% include templates/header.ejs %>
-    
+  
+<script>window.twttr = (function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0],
+    t = window.twttr || {};
+  if (d.getElementById(id)) return t;
+  js = d.createElement(s);
+  js.id = id;
+  js.src = "https://platform.twitter.com/widgets.js";
+  fjs.parentNode.insertBefore(js, fjs);
+
+  t._e = [];
+  t.ready = function(f) {
+    t._e.push(f);
+  };
+
+  return t;
+}(document, "script", "twitter-wjs"));</script>
+
 <header class="text-center">
     <h1><%= title %></h1>
     <p>Welcome to <%= title %></p>    
@@ -7,14 +24,15 @@
 
 <div class='form-group row'>
     <input id='search-name' type='text' class='form-control col-sm 3' placeholder="File Name *">
-    <input id="search-latitude" type="text" class="form-control col-sm-3" placeholder="Enter Latitude">
-    <input id='search-longitude' type="text" class='form-control col-sm-3' placeholder="Enter Longitude">
-    <input id='search-distance' type="text" class='form-control col-sm-3' placeholder="Enter distance (in miles)">
+    <input id='search-term' type="text" class='form-control col-sm-9' placeholder="Enter Search *">
 </div>
 
 <div class="form-group row">
-    <input id='search-term' type="text" class='form-control col-sm-12' placeholder="Enter Search *">
-</div>
+    <input id="search-latitude" type="text" class="form-control col-sm-4" placeholder="Enter Latitude">
+    <input id='search-longitude' type="text" class='form-control col-sm-4' placeholder="Enter Longitude">
+    <input id='search-distance' type="text" class='form-control col-sm-4' placeholder="Enter distance (in miles)">
+ </div>
+   
 
 <div class="row">
     <div class="form-check col-sm-4">
@@ -42,9 +60,8 @@
 <button class='btn btn-primary' onclick='getTweets()'>Search</button>
 
 <p id='search-warning' style="display: none;">Please enter a file name & search term.</p>
-<p id="search-results"></p>
-
-<br><br><hr><br><br>
+<div id="search-results" class="row"></div>
+<hr>
 
 <h2 class='text-center'>Cloud</h2>
 <div class='row'>
@@ -54,6 +71,10 @@
 </div>
 
 <div id="word-cloud" class="text-center"></div>
+<div id="get-tweets" class="text-center" style="display: none;">
+    <button class="btn btn-danger" onclick="displayTweets()">Get Tweets</button>
+</div>
+<div id="embedded-tweets" class="row"></div>
 
 <script src="/javascripts/index.js"></script>
     
