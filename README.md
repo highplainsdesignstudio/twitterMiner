@@ -35,9 +35,9 @@ to open the application.
 
 ### Prerequisites
 
-[Node JS](https://nodejs.org/en/)
-[Bower](https://bower.io/)
-[Twitter Developers Application Keys](https://dev.twitter.com/)
+* [Node JS](https://nodejs.org/en/)
+* [Bower](https://bower.io/)
+* [Twitter Developers Application Keys](https://dev.twitter.com/)
 
 
 ## Built With
@@ -56,7 +56,7 @@ Michael @ High Plains Design Studio using the email admin@highplainsdesignstudio
 ## Versioning
 
 We use [SemVer](http://semver.org/) for versioning. For the versions available, see 
-[v1.2.0](https://github.com/highplainsdesignstudio/twitterMiner). 
+[v1.2.1](https://github.com/highplainsdesignstudio/twitterMiner). 
 
 ## Authors
 
