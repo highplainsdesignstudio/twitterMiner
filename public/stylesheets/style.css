@@ -6,3 +6,7 @@ body {
 a {
   color: #00B7FF;
 }
+
+#tweets-area {
+    min-height: 700px;
+}

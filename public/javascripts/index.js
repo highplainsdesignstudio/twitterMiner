@@ -3,6 +3,8 @@ var hashTags = [];
 var usersCloud = [];
 var wordCloud = [];
 var embeddedTweetsIDs = [];
+var pages = [];
+var currentPage = 0;
 
 function getTweets() {
     // reset the clouds
@@ -39,6 +41,7 @@ function getTweets() {
             resultType: resultType
         };
         
+        // the get request to the server to get the tweets.
         $.get('/getTweets', params, function(data) {
             console.log(data);
             $('#search-results').show()
@@ -128,12 +131,6 @@ function getTweets() {
                 wordCloud.push(textObj);
             }
             
-            
-//            for (let i=0; i < embeddedTweetsIDs.length; i++) {
-//                var id = '#tweet-' + i;
-//                $('#embedded-tweets').append("<div id='"+id+"'></div>");
-//            }
-            
             /*
              * Set the initial word cloud to be the hashTags cloud.
              */
@@ -142,9 +139,12 @@ function getTweets() {
                 autoResize: true,
                 colors: ['red', 'orange', 'green', 'black'],
                 fontSize: ['5em', '4em', '3em', '2em'],
-                steps: 4
+                steps: 4,
+                shape: 'rectangular'
             });
             $('#get-tweets').show();
+            
+            createTweetPages();
             
         });
     } else { 
@@ -165,16 +165,66 @@ function textCloud() {
     $('#word-cloud').jQCloud('update', wordCloud);
 }
 
-function displayTweets() {
-    console.log("DisplayTweets pressed.");
-    for (let i=0; i < embeddedTweetsIDs.length; i++) {
+
+function displayTweets(page) {
+    
+    currentPage = pages.indexOf(page);
+    $("#tweets-area").empty();
+    for (let i=0; i < page.length; i++) {
         var id = 'tweet-' + i;
-        $('#embedded-tweets').append("<div id='"+id+"' class='col-sm-6'></div>");
-        $('#'+id).load('/embedTweets', {id: embeddedTweetsIDs[i]}, function() {
-            console.log("Stuff");
-            twttr.widgets.load();
-        });
+        $('#tweets-area').append("<div id='"+id+"' class='col-sm-6'></div>");
+        twttr.widgets.createTweet(page[i], document.getElementById(id));
     }
+    
+    for (let j=0; j < pages.length; j++) {
+        $(".button-"+j).removeClass('btn-info btn-secodary');
+        if (j===currentPage) {
+            $(".button-"+j).addClass('btn-secondary');
+        } else {
+            $(".button-"+j).addClass('btn-info');
+        }
+    }
+
+}
+
+function createTweetPages () {
+    var count = (embeddedTweetsIDs.length / 10);
+    
+    $("#embedded-tweets").append("<div id='pagination' class='row text-center'><button class='btn btn-danger col-1' onclick='displayTweets(pages[pageDown()])'><</button></div>");
+    for (let i=0; i < count; i++) {
+        var tempArray = embeddedTweetsIDs.slice((i*10), (i+1)*10 );
+        pages.push(tempArray);
+        $("#pagination").append("<button class='btn col-1 button-"+i+"' onclick='displayTweets(pages["+i+"])'>" + (i+1) + "</button");
+    }
+    $("#pagination").append("<button class='btn btn-danger col-1' onclick='displayTweets(pages[pageUp()])'>></button>");
+    
+    
+    $("#embedded-tweets").append("<div id='tweets-area' class='row'></div>");
+    
+    $("#embedded-tweets").append("<div id='pagination1' class='row text-center'><button class='btn btn-danger col-1' onclick='displayTweets(pages[pageDown()])'><</button></div>");
+    for (let i=0; i < count; i++) {
+        var tempArray = embeddedTweetsIDs.slice((i*10), (i+1)*10 );
+        pages.push(tempArray);
+        $("#pagination1").append("<button class='btn col-1 button-"+i+"' onclick='displayTweets(pages["+i+"])'>" + (i+1) + "</button");
+    }
+    $("#pagination1").append("<button class='btn btn-danger col-1' onclick='displayTweets(pages[pageUp()])'>></button>");
+    
+    displayTweets(pages[0]);
 }
 
 
+function pageUp() {
+    var nextPage = currentPage+1;
+    if (nextPage >= pages.length) {
+        nextPage = 0;
+    }
+    return nextPage;
+}
+
+function pageDown() {
+    var nextPage = currentPage-1;
+    if (nextPage < 0) {
+        nextPage = pages.length-1;
+    }
+    return nextPage;
+}
