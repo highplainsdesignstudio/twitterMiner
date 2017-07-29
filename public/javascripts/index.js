@@ -12,6 +12,9 @@ function getTweets() {
     usersCloud = [];
     wordCloud = [];
     embeddedTweetsIDs = [];
+    pages = [];
+    currentPage = 0;
+    
     $('#embedded-tweets').html('');
     
     // Obtain values from the inputs.
